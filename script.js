@@ -45,9 +45,7 @@ function displayProblems() {
         }
     });
 
-    const selectedDayProblems = problems.filter(problem => problem.day === selectedDay);
-
-    count.innerText = selectedDayProblems.length;
+    count.innerText = problems.length;
     updateProgressBar();
     updateSummaryTable();
 }
@@ -63,7 +61,8 @@ function updateStreak() {
         localStorage.setItem("lastActiveDate", today);
     }
 
-    document.getElementById("streak").innerText = streak;
+    document.getElementById("streakText").innerText =
+        streak === 1 ? "1 Day" : `${streak} Days`;
 }
 
 function addProblem() {
@@ -105,14 +104,14 @@ function clearAll() {
 }
 
 function updateProgressBar() {
-    const selectedDay = document.getElementById("problemDay").value;
-    const completed = problems.filter(problem => problem.day === selectedDay).length;
+    const completed = problems.length;
 
     const totalTarget = 100;
     const percentage = Math.min((completed / totalTarget) * 100, 100);
 
     document.getElementById("progressFill").style.width = percentage + "%";
-    document.getElementById("progressText").innerText = Math.round(percentage) + "% Completed";
+    document.getElementById("progressText").innerText =
+        Math.round(percentage) + "% Completed";
 }
 
 function editReflection() {
@@ -186,14 +185,12 @@ function createDayOptions() {
 }
 
 function updateSummaryTable() {
-    const selectedDay = document.getElementById("problemDay").value;
-
     const leetcodeCount = problems.filter(
-        p => p.day === selectedDay && p.category === "LeetCode"
+        p => p.category === "LeetCode"
     ).length;
 
     const a2zCount = problems.filter(
-        p => p.day === selectedDay && p.category === "A2Z"
+        p => p.category === "A2Z"
     ).length;
 
     document.getElementById("leetcodeCount").innerText = leetcodeCount;
