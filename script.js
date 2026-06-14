@@ -37,13 +37,22 @@ function displayProblems() {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${problem.name}</td>
-            <td>${problem.topic}</td>
-            <td>✅ Done</td>
-            <td>
-                <button onclick="deleteProblem(${realIndex})">🗑️</button>
-            </td>
-        `;
+    <td>
+        <span class="problem-name-table">✅ ${problem.name}</span>
+    </td>
+
+    <td>
+        <span class="topic-pill">${problem.topic}</span>
+    </td>
+
+    <td>
+        <span class="status-pill">Done</span>
+    </td>
+
+    <td>
+        <button class="delete-btn" onclick="deleteProblem(${realIndex})">🗑️</button>
+    </td>
+`;
 
         if (problem.category === "LeetCode") {
             leetcodeList.appendChild(row);
@@ -61,15 +70,22 @@ function displayProblems() {
 `;
 
         targetItem.innerHTML = `
+    <span class="problem-name">✅ ${problem.name}</span>
     <span class="badge">${problem.category}</span>
-    ✅ ${problem.name}
 `;
 
         targetList.appendChild(targetItem);
     });
 
     if (dayProblems.length === 0) {
-        targetList.innerHTML = "<p>No targets added yet.</p>";
+        targetList.innerHTML = `
+        <div class="empty-target">
+            🎯 No targets added yet.
+            <small>
+                (Add today's Mission DSA tracker or LeetCode problems to start tracking progress.)
+            </small>
+        </div>
+    `;
     }
 
     count.innerText = problems.length;
