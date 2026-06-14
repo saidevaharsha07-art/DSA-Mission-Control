@@ -178,10 +178,11 @@ body {
 }
 
 .progress-fill {
-    background: linear-gradient(90deg,
-            #22c55e,
-            #06b6d4,
-            #7c3aed);
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #06b6d4, #2563eb, #7c3aed);
+    border-radius: 30px;
+    transition: 0.4s;
 }
 
 /* Today's Target */
