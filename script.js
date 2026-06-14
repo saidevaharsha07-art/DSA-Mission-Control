@@ -14,18 +14,25 @@ function showRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     document.getElementById("quote").innerText = quotes[randomIndex];
 }
-let currentTopic = "Arrays";
+
 function displayProblems() {
     const leetcodeList = document.getElementById("leetcodeList");
     const a2zList = document.getElementById("a2zList");
+    const targetList = document.getElementById("targetList");
+    const targetDayTitle = document.getElementById("targetDayTitle");
     const count = document.getElementById("count");
     const selectedDay = document.getElementById("problemDay").value;
 
     leetcodeList.innerHTML = "";
     a2zList.innerHTML = "";
+    targetList.innerHTML = "";
 
-    problems.forEach((problem, index) => {
-        if (problem.day !== selectedDay) return;
+    targetDayTitle.innerText = selectedDay.replace("day", "Day ");
+
+    const dayProblems = problems.filter(problem => problem.day === selectedDay);
+
+    dayProblems.forEach((problem, index) => {
+        const realIndex = problems.indexOf(problem);
 
         const row = document.createElement("tr");
 
@@ -34,7 +41,7 @@ function displayProblems() {
             <td>${problem.topic}</td>
             <td>✅ Done</td>
             <td>
-                <button onclick="deleteProblem(${index})">🗑️</button>
+                <button onclick="deleteProblem(${realIndex})">🗑️</button>
             </td>
         `;
 
@@ -43,9 +50,19 @@ function displayProblems() {
         } else if (problem.category === "A2Z") {
             a2zList.appendChild(row);
         }
+
+        const targetItem = document.createElement("div");
+        targetItem.className = "target-item";
+        targetItem.innerHTML = `✅ ${problem.name}`;
+        targetList.appendChild(targetItem);
     });
 
+    if (dayProblems.length === 0) {
+        targetList.innerHTML = "<p>No targets added yet.</p>";
+    }
+
     count.innerText = problems.length;
+
     updateProgressBar();
     updateSummaryTable();
 }
@@ -67,8 +84,9 @@ function updateStreak() {
 
 function addProblem() {
     const category = document.getElementById("category").value;
-    const problemName = document.getElementById("problemName").value;
-    const topic = document.getElementById("topic").value;
+    const problemName = document.getElementById("problemName").value.trim();
+    const topic = document.getElementById("topic").value.trim();
+    const day = document.getElementById("problemDay").value;
 
     if (problemName === "" || topic === "") {
         alert("Please fill all fields");
@@ -76,7 +94,7 @@ function addProblem() {
     }
 
     problems.push({
-        day: document.getElementById("problemDay").value,
+        day: day,
         category: category,
         name: problemName,
         topic: topic
@@ -105,7 +123,6 @@ function clearAll() {
 
 function updateProgressBar() {
     const completed = problems.length;
-
     const totalTarget = 100;
     const percentage = Math.min((completed / totalTarget) * 100, 100);
 
@@ -119,7 +136,6 @@ function editReflection() {
     const reflection = localStorage.getItem(day + "_reflection") || "";
 
     document.getElementById("reflectionText").value = reflection;
-
     document.getElementById("reflectionViewer").style.display = "none";
     document.getElementById("reflectionText").style.display = "block";
     document.getElementById("saveBtn").style.display = "inline-block";
@@ -145,7 +161,6 @@ function saveReflection() {
 function loadReflection() {
     const day = document.getElementById("reflectionDay").value;
     const dayNumber = day.replace("day", "");
-
     const reflection = localStorage.getItem(day + "_reflection") || "";
 
     document.getElementById("reflectionText").placeholder =
@@ -180,26 +195,18 @@ function createDayOptions() {
         problemDay.appendChild(option2);
     }
 
-    reflectionDay.value = "day1";
-    problemDay.value = "day1";
+    reflectionDay.value = "day3";
+    problemDay.value = "day3";
 }
 
 function updateSummaryTable() {
-    const leetcodeCount = problems.filter(
-        p => p.category === "LeetCode"
-    ).length;
-
-    const a2zCount = problems.filter(
-        p => p.category === "A2Z"
-    ).length;
+    const leetcodeCount = problems.filter(p => p.category === "LeetCode").length;
+    const a2zCount = problems.filter(p => p.category === "A2Z").length;
 
     document.getElementById("leetcodeCount").innerText = leetcodeCount;
     document.getElementById("a2zCount").innerText = a2zCount;
-    document.getElementById("totalCount").innerText =
-        leetcodeCount + a2zCount;
+    document.getElementById("totalCount").innerText = leetcodeCount + a2zCount;
 }
-
-document.getElementById("reflectionDay").addEventListener("change", loadReflection);
 
 showRandomQuote();
 createDayOptions();
@@ -207,8 +214,5 @@ displayProblems();
 loadReflection();
 updateStreak();
 
-document.getElementById("reflectionDay")
-    .addEventListener("change", loadReflection);
-
-document.getElementById("problemDay")
-    .addEventListener("change", displayProblems);
+document.getElementById("reflectionDay").addEventListener("change", loadReflection);
+document.getElementById("problemDay").addEventListener("change", displayProblems);
