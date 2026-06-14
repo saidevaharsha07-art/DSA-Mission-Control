@@ -53,7 +53,18 @@ function displayProblems() {
 
         const targetItem = document.createElement("div");
         targetItem.className = "target-item";
-        targetItem.innerHTML = `✅ ${problem.name}`;
+
+        targetItem.innerHTML = `
+    ${problem.category === "LeetCode" ? "🧠" : "📚"}
+    <span class="badge">${problem.category}</span>
+    ✅ ${problem.name}
+`;
+
+        targetItem.innerHTML = `
+    <span class="badge">${problem.category}</span>
+    ✅ ${problem.name}
+`;
+
         targetList.appendChild(targetItem);
     });
 

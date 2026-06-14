@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
     <div class="app">
 
         <aside class="sidebar">
@@ -40,7 +39,6 @@
 
                 <div class="card">
                     <h2>📊 Practice Summary</h2>
-
                     <table class="summary-table">
                         <thead>
                             <tr>
@@ -48,18 +46,15 @@
                                 <th>Problems Solved</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <tr>
                                 <td>🧠 LeetCode</td>
                                 <td id="leetcodeCount">0</td>
                             </tr>
-
                             <tr>
                                 <td>📘 Striver A2Z</td>
                                 <td id="a2zCount">0</td>
                             </tr>
-
                             <tr>
                                 <td><strong>Total</strong></td>
                                 <td id="totalCount"><strong>0</strong></td>
@@ -80,7 +75,7 @@
 
                 <div class="stat-card">
                     <h3>📌 Current Topic</h3>
-                    <p id="currentTopic">Number Theory Basics</p>
+                    <p id="currentTopic">Recursion</p>
                 </div>
             </section>
 
@@ -97,147 +92,131 @@
                 <p id="progressText">0% Completed</p>
             </section>
 
-            <h2>🗓️ Today's Target - <span id="targetDayTitle">Day 3</span></h2>
-            <div id="targetList"></div>
-    </div>
-    </section>
+            <section class="card">
+                <h2>🗓️ Today's Target - <span id="targetDayTitle">Day 3</span></h2>
+                <div id="targetList"></div>
+            </section>
 
-    <section id="add-progress" class="card">
-        <h2>➕ Add Progress</h2>
+            <section id="add-progress" class="card page-section">
+                <h2>➕ Add Progress</h2>
 
-        <!-- Add this -->
-        <select id="problemDay"></select>
+                <select id="problemDay"></select>
 
-        <select id="category">
-            <option value="LeetCode">LeetCode Problem</option>
-            <option value="A2Z">Mission DSA Tracker</option>
-        </select>
+                <select id="category">
+                    <option value="LeetCode">LeetCode Problem</option>
+                    <option value="A2Z">Striver A2Z Topic</option>
+                </select>
 
-        <input type="text" id="problemName" placeholder="Enter problem name">
-        <input type="text" id="topic" placeholder="Topic / Note">
+                <input type="text" id="problemName" placeholder="Enter problem name">
+                <input type="text" id="topic" placeholder="Topic / Note">
 
-        <button onclick="addProblem()">Add</button>
-    </section>
+                <button onclick="addProblem()">Add</button>
+            </section>
 
-    <section id="problems" class="lists-grid page-section">
-        <div class="card">
-            <h2>🧠 LeetCode Problems</h2>
+            <section id="problems" class="lists-grid page-section">
+                <div class="card">
+                    <h2>🧠 LeetCode Problems</h2>
+                    <table class="problem-table">
+                        <thead>
+                            <tr>
+                                <th>Problem</th>
+                                <th>Topic</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leetcodeList"></tbody>
+                    </table>
+                </div>
 
-            <table class="problem-table">
-                <thead>
-                    <tr>
-                        <th>Problem</th>
-                        <th>Topic</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+                <div class="card">
+                    <h2>📘 Mission DSA Tracker</h2>
+                    <table class="problem-table">
+                        <thead>
+                            <tr>
+                                <th>Problem</th>
+                                <th>Topic</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="a2zList"></tbody>
+                    </table>
+                </div>
+            </section>
 
-                <tbody id="leetcodeList"></tbody>
-            </table>
-        </div>
+            <section id="reflection" class="card page-section">
+                <h2>📝 Daily Reflection</h2>
 
-        <div class="card">
-            <h2>📘 Mission DSA Tracker</h2>
+                <select id="reflectionDay"></select>
 
-            <table class="problem-table">
-                <thead>
-                    <tr>
-                        <th>Problem</th>
-                        <th>Topic</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+                <div id="reflectionViewer"></div>
 
-                <tbody id="a2zList"></tbody>
-            </table>
-        </div>
+                <button onclick="editReflection()">✏️ Edit Reflection</button>
+                <button onclick="saveReflection()" id="saveBtn" style="display: none;">
+                    💾 Save Reflection
+                </button>
 
-    </section>
+                <textarea id="reflectionText" placeholder="Write your reflection..." style="display: none;"></textarea>
 
-    <section id="reflection" class="card page-section">
-        <h2>📝 Daily Reflection</h2>
+                <p id="savedMsg"></p>
+            </section>
 
-        <select id="reflectionDay"></select>
+            <section id="roadmap" class="card page-section">
+                <h2>🗺️ Roadmap Progress</h2>
 
-        <div id="reflectionViewer"></div>
+                <div class="roadmap-item completed">
+                    <span>🟦 Basic Maths</span>
+                    <span>✅ Completed</span>
+                </div>
 
-        <button onclick="editReflection()">✏️ Edit Reflection</button>
-        <button onclick="saveReflection()" id="saveBtn" style="display: none;">
-            💾 Save Reflection
-        </button>
+                <div class="roadmap-item completed">
+                    <span>🟦 Recursion</span>
+                    <span>✅ Completed</span>
+                </div>
 
-        <textarea id="reflectionText" placeholder="Write your reflection..." style="display: none;"></textarea>
+                <div class="roadmap-item current">
+                    <span>🟦 Hashing</span>
+                    <span>🎯 Current Focus</span>
+                </div>
 
-        <p id="savedMsg"></p>
-    </section>
+                <div class="roadmap-item next">
+                    <span>🟦 Sorting</span>
+                    <span>⏳ Next</span>
+                </div>
 
-    <section id="roadmap" class="card">
-        <h2>🗺️ Roadmap Progress</h2>
+                <div class="roadmap-item">
+                    <span>🟦 Arrays</span>
+                    <span>⏳ Upcoming</span>
+                </div>
 
-        <div class="roadmap-item completed">
-            <span>🟦 Number Theory Basics</span>
-            <span>✅ Completed</span>
-        </div>
+                <div class="roadmap-item locked">
+                    <span>🟦 Linked List</span>
+                    <span>🔒 Locked</span>
+                </div>
 
-        <div class="roadmap-item current">
-            <span>🟦 Arrays</span>
-            <span>🎯 Current Focus</span>
-        </div>
+                <div class="roadmap-item locked">
+                    <span>🟦 Stack & Queue</span>
+                    <span>🔒 Locked</span>
+                </div>
 
-        <div class="roadmap-item next">
-            <span>🟦 Hashing</span>
-            <span>⏳ Next</span>
-        </div>
+                <div class="roadmap-item locked">
+                    <span>🟦 Trees</span>
+                    <span>🔒 Locked</span>
+                </div>
 
-        <div class="roadmap-item">
-            <span>🟦 Basic Recursion</span>
-            <span>⏳ Upcoming</span>
-        </div>
+                <div class="roadmap-item locked">
+                    <span>🟦 Graphs</span>
+                    <span>🔒 Locked</span>
+                </div>
 
-        <div class="roadmap-item">
-            <span>🟦 Sorting</span>
-            <span>⏳ Upcoming</span>
-        </div>
+                <div class="roadmap-item locked">
+                    <span>🟦 Dynamic Programming</span>
+                    <span>🔒 Locked</span>
+                </div>
+            </section>
 
-        <div class="roadmap-item">
-            <span>🟦 Binary Search</span>
-            <span>⏳ Upcoming</span>
-        </div>
-
-        <div class="roadmap-item">
-            <span>🟦 Strings</span>
-            <span>⏳ Upcoming</span>
-        </div>
-
-        <div class="roadmap-item locked">
-            <span>🟦 Linked List</span>
-            <span>🔒 Locked</span>
-        </div>
-
-        <div class="roadmap-item locked">
-            <span>🟦 Stack & Queue</span>
-            <span>🔒 Locked</span>
-        </div>
-
-        <div class="roadmap-item locked">
-            <span>🟦 Trees</span>
-            <span>🔒 Locked</span>
-        </div>
-
-        <div class="roadmap-item locked">
-            <span>🟦 Graphs</span>
-            <span>🔒 Locked</span>
-        </div>
-
-        <div class="roadmap-item locked">
-            <span>🟦 Dynamic Programming</span>
-            <span>🔒 Locked</span>
-        </div>
-    </section>
-    </main>
-
+        </main>
     </div>
 
     <script src="script.js"></script>
