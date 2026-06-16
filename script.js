@@ -221,9 +221,18 @@ function createDayOptions() {
         option2.innerText = "Day " + i;
         problemDay.appendChild(option2);
     }
+    let latestDay = "day1";
 
-    reflectionDay.value = "day3";
-    problemDay.value = "day3";
+    for (let i = 45; i >= 1; i--) {
+        const reflection = localStorage.getItem("day" + i + "_reflection");
+        if (reflection && reflection.trim() !== "") {
+            latestDay = "day" + i;
+            break;
+        }
+    }
+
+    reflectionDay.value = latestDay;
+    problemDay.value = latestDay;
 }
 
 function updateSummaryTable() {
@@ -241,5 +250,10 @@ displayProblems();
 loadReflection();
 updateStreak();
 
-document.getElementById("reflectionDay").addEventListener("change", loadReflection);
-document.getElementById("problemDay").addEventListener("change", displayProblems);
+document.getElementById("reflectionDay").addEventListener("change", function () {
+    loadReflection();
+});
+
+document.getElementById("problemDay").addEventListener("change", function () {
+    displayProblems();
+});
