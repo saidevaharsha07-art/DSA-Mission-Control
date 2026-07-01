@@ -561,6 +561,205 @@
                 </div>
 
             </section>
+            <section id="analytics" class="card analytics-card page-section">
+
+                <div class="analytics-header">
+                    <div class="analytics-title-area">
+                        <div class="analytics-main-icon">◔</div>
+
+                        <div>
+                            <h2>Practice Analytics</h2>
+                            <p>Turning data into better decisions.</p>
+                        </div>
+                    </div>
+
+                    <div class="analytics-filter">
+                        <span>This Week</span>
+                        <span>⌄</span>
+                        <span>📅</span>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+
+                    <div class="analytics-box problems-solved-box">
+                        <h3>Problems Solved</h3>
+
+                        <div class="donut-row">
+                            <div class="donut-chart">
+                                <div class="donut-center">
+                                    <strong id="analyticsTotal">44</strong>
+                                    <span>Total</span>
+                                </div>
+                            </div>
+
+                            <div class="chart-legend">
+                                <p><span class="dot blue"></span> LeetCode <strong id="leetcodeAnalytics">18
+                                        (41%)</strong></p>
+                                <p><span class="dot pink"></span> Mission Tracker <strong id="missionAnalytics">26
+                                        (59%)</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-box daily-chart-box">
+                        <h3>Daily Problems Solved</h3>
+
+                        <div class="line-chart">
+                            <div class="y-labels">
+                                <span>50</span>
+                                <span>40</span>
+                                <span>30</span>
+                                <span>20</span>
+                                <span>10</span>
+                                <span>0</span>
+                            </div>
+
+                            <div class="chart-area">
+                                <div class="chart-grid-lines"></div>
+
+                                <svg viewBox="0 0 300 170" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="lineGradient" x1="0" x2="1" y1="0" y2="0">
+                                            <stop offset="0%" stop-color="#0ea5e9" />
+                                            <stop offset="100%" stop-color="#8b5cf6" />
+                                        </linearGradient>
+
+                                        <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+                                            <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.55" />
+                                            <stop offset="100%" stop-color="#0f172a" stop-opacity="0" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <path class="area-path"
+                                        d="M0 165 L25 145 L50 135 L75 110 L100 95 L125 70 L150 70 L175 48 L200 34 L225 25 L250 18 L280 4 L300 0 L300 170 L0 170 Z" />
+
+                                    <path class="line-path"
+                                        d="M0 165 L25 145 L50 135 L75 110 L100 95 L125 70 L150 70 L175 48 L200 34 L225 25 L250 18 L280 4 L300 0" />
+
+                                    <circle cx="280" cy="4" r="5"></circle>
+                                </svg>
+
+                                <div class="chart-value-badge">44</div>
+
+                                <div class="x-labels">
+                                    <span>Day 1</span>
+                                    <span>Day 3</span>
+                                    <span>Day 5</span>
+                                    <span>Day 7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-box category-box">
+                        <h3>Category Distribution</h3>
+
+                        <div class="small-donut-row">
+                            <div class="category-donut">
+                                <div class="small-donut-hole"></div>
+                            </div>
+
+                            <div class="category-legend">
+                                <p><span class="dot blue"></span> Arrays <strong>35%</strong></p>
+                                <p><span class="dot purple"></span> Sorting <strong>25%</strong></p>
+                                <p><span class="dot cyan"></span> Recursion <strong>20%</strong></p>
+                                <p><span class="dot orange"></span> Others <strong>20%</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-box difficulty-box">
+                        <h3>Difficulty Breakdown</h3>
+
+                        <div class="difficulty-row">
+                            <span>Easy</span>
+                            <div class="difficulty-track">
+                                <div class="difficulty-fill easy"></div>
+                            </div>
+                            <strong>50%</strong>
+                        </div>
+
+                        <div class="difficulty-row">
+                            <span>Medium</span>
+                            <div class="difficulty-track">
+                                <div class="difficulty-fill medium"></div>
+                            </div>
+                            <strong>35%</strong>
+                        </div>
+
+                        <div class="difficulty-row">
+                            <span>Hard</span>
+                            <div class="difficulty-track">
+                                <div class="difficulty-fill hard"></div>
+                            </div>
+                            <strong>15%</strong>
+                        </div>
+                    </div>
+
+                    <div class="analytics-box streak-calendar-box">
+                        <div class="calendar-header">
+                            <h3>Streak Calendar</h3>
+
+                            <div class="calendar-streak">
+                                <strong>🔥 11 Days</strong>
+                                <span>Current Streak</span>
+                            </div>
+                        </div>
+
+                        <div class="calendar-months">
+                            <span>May</span>
+                            <span>June</span>
+                        </div>
+
+                        <div class="streak-calendar">
+                            <div class="day-labels">
+                                <span>Mon</span>
+                                <span>Tue</span>
+                                <span>Wed</span>
+                                <span>Thu</span>
+                                <span>Fri</span>
+                                <span>Sat</span>
+                                <span>Sun</span>
+                            </div>
+
+                            <div class="calendar-grid">
+                                <span></span><span></span><span></span><span class="level-1"></span><span
+                                    class="level-1"></span><span class="level-2"></span><span class="level-2"></span>
+                                <span></span><span></span><span class="level-1"></span><span
+                                    class="level-2"></span><span class="level-3"></span><span
+                                    class="level-3"></span><span class="level-2"></span>
+                                <span></span><span></span><span></span><span class="level-1"></span><span
+                                    class="level-2"></span><span class="level-3"></span><span class="level-2"></span>
+                                <span></span><span></span><span class="level-1"></span><span
+                                    class="level-1"></span><span class="level-2"></span><span
+                                    class="level-4"></span><span class="level-3"></span>
+                                <span class="level-1"></span><span class="level-1"></span><span
+                                    class="level-2"></span><span class="level-3"></span><span
+                                    class="level-4"></span><span class="level-4"></span><span class="level-3"></span>
+                                <span></span><span></span><span></span><span class="level-2"></span><span
+                                    class="level-3"></span><span class="level-2"></span><span class="level-1"></span>
+                                <span></span><span></span><span></span><span></span><span class="level-1"></span><span
+                                    class="level-1"></span><span></span>
+                            </div>
+                        </div>
+
+                        <div class="calendar-legend">
+                            <span><i></i> No Activity</span>
+                            <span><i class="level-1"></i> 1-2 Problems</span>
+                            <span><i class="level-3"></i> 3-4 Problems</span>
+                            <span><i class="level-4"></i> 5+ Problems</span>
+                        </div>
+                    </div>
+
+                    <div class="analytics-tip">
+                        💡 <strong>Tip:</strong> Solve a little <span>every day</span>, improve a <span>lot</span> over
+                        time.
+                    </div>
+
+                </div>
+
+            </section>
 
         </main>
     </div>
