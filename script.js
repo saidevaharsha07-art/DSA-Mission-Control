@@ -11,8 +11,11 @@ const quotes = [
 ];
 
 function showRandomQuote() {
+    const quote = document.getElementById("quote");
+    if (!quote) return;
+
     const randomIndex = Math.floor(Math.random() * quotes.length);
-    document.getElementById("quote").innerText = quotes[randomIndex];
+    quote.innerText = quotes[randomIndex];
 }
 
 function displayProblems() {
@@ -21,77 +24,126 @@ function displayProblems() {
     const targetList = document.getElementById("targetList");
     const targetDayTitle = document.getElementById("targetDayTitle");
     const count = document.getElementById("count");
-    const selectedDay = document.getElementById("problemDay").value;
+    const problemDay = document.getElementById("problemDay");
 
-    leetcodeList.innerHTML = "";
-    a2zList.innerHTML = "";
-    targetList.innerHTML = "";
+    if (!problemDay) return;
 
-    targetDayTitle.innerText = selectedDay.replace("day", "Day ");
+    const selectedDay = problemDay.value;
+    const dayNumber = selectedDay.replace("day", "");
+
+    if (leetcodeList) leetcodeList.innerHTML = "";
+    if (a2zList) a2zList.innerHTML = "";
+    if (targetList) targetList.innerHTML = "";
+    if (targetDayTitle) targetDayTitle.innerText = "Day " + dayNumber;
 
     const dayProblems = problems.filter(problem => problem.day === selectedDay);
 
-    dayProblems.forEach((problem, index) => {
+    dayProblems.forEach(problem => {
         const realIndex = problems.indexOf(problem);
 
         const row = document.createElement("tr");
 
         row.innerHTML = `
-    <td>
-        <span class="problem-name-table">✅ ${problem.name}</span>
-    </td>
+            <td>
+                <span class="problem-name-table">✅ ${problem.name}</span>
+            </td>
+            <td>
+                <span class="topic-pill">${problem.topic || "Arrays"}</span>
+            </td>
+            <td>
+                <span class="status-pill">Done</span>
+            </td>
+            <td>
+                <button class="delete-btn" onclick="deleteProblem(${realIndex})">🗑️</button>
+            </td>
+        `;
 
-    <td>
-        <span class="topic-pill">${problem.topic}</span>
-    </td>
-
-    <td>
-        <span class="status-pill">Done</span>
-    </td>
-
-    <td>
-        <button class="delete-btn" onclick="deleteProblem(${realIndex})">🗑️</button>
-    </td>
-`;
-
-        if (problem.category === "LeetCode") {
+        if (problem.category === "LeetCode" && leetcodeList) {
             leetcodeList.appendChild(row);
-        } else if (problem.category === "A2Z") {
+        } else if (problem.category === "A2Z" && a2zList) {
             a2zList.appendChild(row);
         }
-
-        const targetItem = document.createElement("div");
-        targetItem.className = "target-item";
-
-        targetItem.innerHTML = `
-    ${problem.category === "LeetCode" ? "🧠" : "📚"}
-    <span class="badge">${problem.category}</span>
-    ✅ ${problem.name}
-`;
-
-        targetItem.innerHTML = `
-    <span class="problem-name">✅ ${problem.name}</span>
-    <span class="badge">${problem.category}</span>
-`;
-
-        targetList.appendChild(targetItem);
     });
+
+    displayTargetList(dayProblems);
+    updateCurrentTopic(dayProblems);
+    updateTargetProgress(dayProblems);
+    updateSummaryTable();
+
+    if (count) count.innerText = problems.length;
+}
+
+function displayTargetList(dayProblems) {
+    const targetList = document.getElementById("targetList");
+    if (!targetList) return;
+
+    targetList.innerHTML = "";
 
     if (dayProblems.length === 0) {
         targetList.innerHTML = `
-        <div class="empty-target">
-            🎯 No targets added yet.
-            <small>
-                (Add today's Mission DSA tracker or LeetCode problems to start tracking progress.)
-            </small>
-        </div>
-    `;
+            <div class="empty-target">
+                🎯 No targets added yet.
+                <small>Add today's problems to start tracking progress.</small>
+            </div>
+        `;
+        return;
     }
 
-    count.innerText = problems.length;
+    dayProblems.forEach(problem => {
+        const item = document.createElement("div");
+        item.className = "target-item";
 
-    updateProgressBar();
-    updateSummaryTable();
+        item.innerHTML = `
+            <div class="status-dot">✓</div>
+
+            <div class="problem-name">
+                ${problem.name}
+            </div>
+
+            <div class="difficulty">
+                Easy
+            </div>
+
+            <div class="status-dot">
+                ✓
+            </div>
+        `;
+
+        targetList.appendChild(item);
+    });
+}
+
+function updateTargetProgress(dayProblems) {
+    const completedText = document.getElementById("targetCompletedText");
+    const percentText = document.getElementById("targetPercentText");
+    const progressFill = document.getElementById("targetProgressFill");
+
+    const completed = dayProblems.length;
+    const total = Math.max(4, completed);
+    const percent = total === 0 ? 0 : Math.min((completed / total) * 100, 100);
+
+    if (completedText) {
+        completedText.innerText = `${completed} / ${total} Completed`;
+    }
+
+    if (percentText) {
+        percentText.innerText = `${Math.round(percent)}%`;
+    }
+
+    if (progressFill) {
+        progressFill.style.width = percent + "%";
+    }
+}
+
+function updateCurrentTopic(dayProblems) {
+    const currentTopic = document.getElementById("currentTopic");
+    if (!currentTopic) return;
+
+    if (dayProblems.length > 0 && dayProblems[0].topic) {
+        currentTopic.innerText = dayProblems[0].topic;
+    } else {
+        currentTopic.innerText = "Arrays";
+    }
 }
 
 function updateStreak() {
@@ -105,18 +157,28 @@ function updateStreak() {
         localStorage.setItem("lastActiveDate", today);
     }
 
-    document.getElementById("streakText").innerText =
-        streak === 1 ? "1 Day" : `${streak} Days`;
+    const streakDays = document.getElementById("streakDays");
+    const streakText = document.getElementById("streakText");
+
+    if (streakDays) {
+        streakDays.innerText = streak;
+    }
+
+    if (streakText) {
+        streakText.innerText = streak === 1 ? "1 Day" : `${streak} Days`;
+    }
 }
 
 function addProblem() {
     const category = document.getElementById("category").value;
     const problemName = document.getElementById("problemName").value.trim();
-    const topic = document.getElementById("topic").value.trim();
+    const topicInput = document.getElementById("topic");
     const day = document.getElementById("problemDay").value;
 
-    if (problemName === "" || topic === "") {
-        alert("Please fill all fields");
+    const topic = topicInput ? topicInput.value.trim() : "Arrays";
+
+    if (problemName === "") {
+        alert("Please enter problem name");
         return;
     }
 
@@ -124,13 +186,16 @@ function addProblem() {
         day: day,
         category: category,
         name: problemName,
-        topic: topic
+        topic: topic || "Arrays"
     });
 
     localStorage.setItem("problems", JSON.stringify(problems));
 
     document.getElementById("problemName").value = "";
-    document.getElementById("topic").value = "";
+
+    if (topicInput) {
+        topicInput.value = "";
+    }
 
     displayProblems();
     updateStreak();
@@ -148,16 +213,6 @@ function clearAll() {
     displayProblems();
 }
 
-function updateProgressBar() {
-    const completed = problems.length;
-    const totalTarget = 100;
-    const percentage = Math.min((completed / totalTarget) * 100, 100);
-
-    document.getElementById("progressFill").style.width = percentage + "%";
-    document.getElementById("progressText").innerText =
-        Math.round(percentage) + "% Completed";
-}
-
 function editReflection() {
     const day = document.getElementById("reflectionDay").value;
     const reflection = localStorage.getItem(day + "_reflection") || "";
@@ -170,16 +225,11 @@ function editReflection() {
 
 function saveReflection() {
     const day = document.getElementById("reflectionDay").value;
-    const reflection = document.getElementById("reflectionText").value;
+    const reflection = document.getElementById("reflectionText").value.trim();
 
     localStorage.setItem(day + "_reflection", reflection);
 
-    document.getElementById("reflectionViewer").innerText =
-        reflection || "No reflection written yet.";
-
-    document.getElementById("reflectionViewer").style.display = "block";
-    document.getElementById("reflectionText").style.display = "none";
-    document.getElementById("saveBtn").style.display = "none";
+    loadReflection();
 
     document.getElementById("savedMsg").innerText =
         "Reflection saved for " + day.replace("day", "Day ");
@@ -190,22 +240,66 @@ function loadReflection() {
     const dayNumber = day.replace("day", "");
     const reflection = localStorage.getItem(day + "_reflection") || "";
 
-    document.getElementById("reflectionText").placeholder =
-        "Write your Day " + dayNumber + " reflection...";
+    const reflectionTitle = document.getElementById("reflectionDayTitle");
+    const reflectionText = document.getElementById("reflectionText");
+    const reflectionViewer = document.getElementById("reflectionViewer");
+    const saveBtn = document.getElementById("saveBtn");
 
-    document.getElementById("reflectionText").value = reflection;
+    if (reflectionTitle) {
+        reflectionTitle.innerText = "Day " + dayNumber;
+    }
 
-    document.getElementById("reflectionViewer").innerText =
-        reflection || "No reflection written yet.";
+    reflectionText.placeholder = "Write your Day " + dayNumber + " reflection...";
+    reflectionText.value = reflection;
 
-    document.getElementById("reflectionViewer").style.display = "block";
-    document.getElementById("reflectionText").style.display = "none";
-    document.getElementById("saveBtn").style.display = "none";
+    if (reflection.trim() === "") {
+        reflectionViewer.innerHTML = `
+            <div class="reflection-box">
+                <h3>What I Learned</h3>
+                <ul>
+                    <li>Add your learnings here</li>
+                    <li>Important concepts</li>
+                    <li>Patterns you noticed</li>
+                </ul>
+            </div>
+
+            <div class="reflection-box">
+                <h3>Challenges Faced</h3>
+                <ul>
+                    <li>Add your difficulties here</li>
+                    <li>Edge cases</li>
+                    <li>Logic mistakes</li>
+                </ul>
+            </div>
+
+            <div class="reflection-box">
+                <h3>Tomorrow's Focus</h3>
+                <ul>
+                    <li>Add tomorrow's plan</li>
+                    <li>Revision topics</li>
+                    <li>Next problems</li>
+                </ul>
+            </div>
+        `;
+    } else {
+        reflectionViewer.innerHTML = `
+            <div class="reflection-box full-reflection">
+                <h3>Saved Reflection</h3>
+                <p>${reflection.replace(/\n/g, "<br>")}</p>
+            </div>
+        `;
+    }
+
+    reflectionViewer.style.display = "grid";
+    reflectionText.style.display = "none";
+    saveBtn.style.display = "none";
 }
 
 function createDayOptions() {
     const reflectionDay = document.getElementById("reflectionDay");
     const problemDay = document.getElementById("problemDay");
+
+    if (!reflectionDay || !problemDay) return;
 
     reflectionDay.innerHTML = "";
     problemDay.innerHTML = "";
@@ -221,11 +315,14 @@ function createDayOptions() {
         option2.innerText = "Day " + i;
         problemDay.appendChild(option2);
     }
-    let latestDay = "day1";
+
+    let latestDay = "day7";
 
     for (let i = 45; i >= 1; i--) {
-        const reflection = localStorage.getItem("day" + i + "_reflection");
-        if (reflection && reflection.trim() !== "") {
+        const hasProblems = problems.some(problem => problem.day === "day" + i);
+        const hasReflection = localStorage.getItem("day" + i + "_reflection");
+
+        if (hasProblems || hasReflection) {
             latestDay = "day" + i;
             break;
         }
@@ -239,21 +336,36 @@ function updateSummaryTable() {
     const leetcodeCount = problems.filter(p => p.category === "LeetCode").length;
     const a2zCount = problems.filter(p => p.category === "A2Z").length;
 
-    document.getElementById("leetcodeCount").innerText = leetcodeCount;
-    document.getElementById("a2zCount").innerText = a2zCount;
-    document.getElementById("totalCount").innerText = leetcodeCount + a2zCount;
+    const leetcodeCountBox = document.getElementById("leetcodeCount");
+    const a2zCountBox = document.getElementById("a2zCount");
+    const totalCountBox = document.getElementById("totalCount");
+
+    if (leetcodeCountBox) leetcodeCountBox.innerText = leetcodeCount;
+    if (a2zCountBox) a2zCountBox.innerText = a2zCount;
+    if (totalCountBox) totalCountBox.innerText = leetcodeCount + a2zCount;
 }
 
-showRandomQuote();
-createDayOptions();
-displayProblems();
-loadReflection();
-updateStreak();
-
-document.getElementById("reflectionDay").addEventListener("change", function () {
-    loadReflection();
-});
-
-document.getElementById("problemDay").addEventListener("change", function () {
+function initializeApp() {
+    showRandomQuote();
+    createDayOptions();
     displayProblems();
-});
+    loadReflection();
+    updateStreak();
+
+    const reflectionDay = document.getElementById("reflectionDay");
+    const problemDay = document.getElementById("problemDay");
+
+    if (reflectionDay) {
+        reflectionDay.addEventListener("change", function () {
+            loadReflection();
+        });
+    }
+
+    if (problemDay) {
+        problemDay.addEventListener("change", function () {
+            displayProblems();
+        });
+    }
+}
+
+initializeApp();

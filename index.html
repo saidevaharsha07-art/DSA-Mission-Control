@@ -30,7 +30,7 @@
                 <p>Track your 45-days DSA journey like a serious mission.</p>
             </section>
 
-            <section class="stats-grid">
+            <section class="stats-grid dashboard-stats">
                 <div class="target-box">
                     🎯 Complete 100 Problems Before July 25
                 </div>
@@ -55,7 +55,7 @@
                             </tr>
                             <tr>
                                 <td><strong>Total</strong></td>
-                                <td id="totalCount"><strong>0</strong></td>
+                                <td><strong id="totalCount">0</strong></td>
                             </tr>
                         </tbody>
                     </table>
@@ -68,12 +68,12 @@
 
                 <div class="stat-card">
                     <h3>🔥 Streak</h3>
-                    <p id="streakText">1 Day</p>
+                    <p id="streakText">0 Days</p>
                 </div>
 
                 <div class="stat-card">
                     <h3>📌 Current Topic</h3>
-                    <p id="currentTopic">Recursion</p>
+                    <p id="currentTopicSmall">Arrays</p>
                 </div>
             </section>
 
@@ -90,25 +90,146 @@
                 <p id="progressText">0% Completed</p>
             </section>
 
-            <section class="card">
-                <h2>🗓️ Today's Target - <span id="targetDayTitle">Day 3</span></h2>
-                <div id="targetList"></div>
-            </section>
+            <section id="target-dashboard" class="page-section">
 
-            <section id="add-progress" class="card page-section">
-                <h2>➕ Add Progress</h2>
+                <section class="card target-card">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-icon">🎯</div>
+                            <div>
+                                <h2>Today's Target - <span id="targetDayTitle">Day 1</span></h2>
+                                <p>Stay focused. Complete your daily goals.</p>
+                            </div>
+                        </div>
 
-                <select id="problemDay"></select>
+                        <div class="day-badge">
+                            🗓️ <span id="dayBadgeText">Day 1</span>
+                        </div>
+                    </div>
 
-                <select id="category">
-                    <option value="LeetCode">LeetCode Problem</option>
-                    <option value="A2Z">Striver A2Z Topic</option>
-                </select>
+                    <div id="targetList" class="target-list"></div>
 
-                <input type="text" id="problemName" placeholder="Enter problem name">
-                <input type="text" id="topic" placeholder="Topic / Note">
+                    <div class="target-progress-info">
+                        <span id="targetCompletedText">0 / 4 Completed</span>
+                        <span id="targetPercentText">0%</span>
+                    </div>
 
-                <button onclick="addProblem()">Add</button>
+                    <div class="target-progress-bar">
+                        <div id="targetProgressFill"></div>
+                    </div>
+                </section>
+
+                <section class="stats-grid mission-grid">
+
+                    <div class="card streak-card">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <div class="section-icon fire-icon">🔥</div>
+                                <div>
+                                    <h2>Current Streak</h2>
+                                    <p>Keep it going!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="streak-content">
+                            <div class="streak-circle">
+                                <h3 id="streakDays">0</h3>
+                                <p>Days</p>
+                            </div>
+
+                            <div class="week-dots">
+                                <div class="week-labels">
+                                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                                </div>
+
+                                <div class="dots-grid">
+                                    <span>✓</span><span>✓</span><span>✓</span><span>✓</span><span>✓</span><span>✓</span><span>✓</span>
+                                    <span>✓</span><span>✓</span><span>✓</span><span>✓</span><span></span><span></span><span></span>
+                                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="best-streak">🏆 Best Streak: <span id="bestStreakText">0 Days</span></p>
+                    </div>
+
+                    <div class="card topic-card">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <div class="section-icon book-icon">📖</div>
+                                <div>
+                                    <h2>Current Topic</h2>
+                                    <p>Focus Area</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="topic-box">
+                            <h3 id="currentTopic">Arrays</h3>
+                        </div>
+
+                        <div class="topic-note">
+                            <span>🎯</span>
+                            <p>Master the fundamentals.<br>Build the future.</p>
+                        </div>
+                    </div>
+
+                </section>
+
+                <section id="reflection" class="card reflection-card page-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-icon reflection-icon">🖊️</div>
+                            <div>
+                                <h2>Daily Reflection - <span id="reflectionDayTitle">Day 1</span></h2>
+                                <p>Review your day. Learn and level up.</p>
+                            </div>
+                        </div>
+
+                        <button onclick="editReflection()" class="edit-btn">✏️ Edit Reflection</button>
+                    </div>
+
+                    <select id="reflectionDay"></select>
+
+                    <div id="reflectionViewer" class="reflection-grid"></div>
+
+                    <textarea id="reflectionText" placeholder="Write your reflection..."
+                        style="display: none;"></textarea>
+
+                    <button onclick="saveReflection()" id="saveBtn" style="display: none;">
+                        💾 Save Reflection
+                    </button>
+
+                    <p id="savedMsg"></p>
+                </section>
+
+                <section id="add-progress" class="card add-progress-card page-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-icon add-icon">➕</div>
+                            <div>
+                                <h2>Add Progress</h2>
+                                <p>Track new problems you solve.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-progress-form">
+                        <select id="problemDay"></select>
+
+                        <select id="category">
+                            <option value="LeetCode">LeetCode Problem</option>
+                            <option value="A2Z">Mission DSA Topic</option>
+                        </select>
+
+                        <input type="text" id="problemName" placeholder="Enter problem name">
+                        <input type="text" id="topic" placeholder="Topic / Note">
+
+                        <button onclick="addProblem()">Add</button>
+                    </div>
+                </section>
+
             </section>
 
             <section id="problems" class="lists-grid page-section">
@@ -143,112 +264,308 @@
                 </div>
             </section>
 
-            <section id="reflection" class="card page-section">
-                <h2>📝 Daily Reflection</h2>
+            <section id="roadmap" class="card page-section roadmap-dark-section">
 
-                <select id="reflectionDay"></select>
+                <div class="roadmap-header">
 
-                <div id="reflectionViewer"></div>
+                    <div class="roadmap-title-area">
+                        <div class="roadmap-main-logo">🗺️</div>
 
-                <button onclick="editReflection()">✏️ Edit Reflection</button>
-                <button onclick="saveReflection()" id="saveBtn" style="display: none;">
-                    💾 Save Reflection
-                </button>
-
-                <textarea id="reflectionText" placeholder="Write your reflection..." style="display: none;"></textarea>
-
-                <p id="savedMsg"></p>
-            </section>
-
-            <section id="roadmap" class="card page-section">
-                <h2>🗺️ Roadmap Progress</h2>
-
-                <div class="roadmap-timeline">
-
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">✓</div>
-                        <div class="roadmap-content">
-                            <h3>Basic Maths</h3>
-                            <p>Completed</p>
+                        <div>
+                            <h2>Roadmap Progress</h2>
+                            <p>Track your DSA learning journey step by step.</p>
                         </div>
                     </div>
 
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">✓</div>
-                        <div class="roadmap-content">
-                            <h3>Recursion</h3>
-                            <p>Completed</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">✓</div>
-                        <div class="roadmap-content">
-                            <h3>Hashing</h3>
-                            <p>Completed</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">✓</div>
-                        <div class="roadmap-content">
-                            <h3>Sorting</h3>
-                            <p>Completed</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step active">
-                        <div class="roadmap-dot">🎯</div>
-                        <div class="roadmap-content">
-                            <h3>Arrays</h3>
-                            <p>Current Focus</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step upcoming-step">
-                        <div class="roadmap-dot">🔒</div>
-                        <div class="roadmap-content">
-                            <h3>Linked List</h3>
-                            <p>Locked</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step upcoming-step">
-                        <div class="roadmap-dot">🔒</div>
-                        <div class="roadmap-content">
-                            <h3>Stack & Queue</h3>
-                            <p>Locked</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">🔒</div>
-                        <div class="roadmap-content">
-                            <h3>Trees</h3>
-                            <p>Locked</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">🔒</div>
-                        <div class="roadmap-content">
-                            <h3>Graphs</h3>
-                            <p>Locked</p>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">🔒</div>
-                        <div class="roadmap-content">
-                            <h3>Dynamic Programming</h3>
-                            <p>Locked</p>
+                    <div class="current-focus-box">
+                        <div class="focus-target-icon">🎯</div>
+                        <div>
+                            <span>Current Focus</span>
+                            <strong>Arrays</strong>
                         </div>
                     </div>
 
                 </div>
+
+                <div class="roadmap-timeline">
+
+                    <div class="roadmap-step done">
+                        <div class="roadmap-dot">1</div>
+                        <div class="mini-check">✓</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Basic Maths & Logic</h3>
+                                <p class="topics">Number System, GCD, LCM,<br>Prime, Divisors, Modulo</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status completed">Completed</span>
+                                <p class="progress-text">100%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong>12 / 12</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step done">
+                        <div class="roadmap-dot">2</div>
+                        <div class="mini-check">✓</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Recursion</h3>
+                                <p class="topics">Basic Recursion, Memoization,<br>Backtracking Intro</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status completed">Completed</span>
+                                <p class="progress-text">100%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong>18 / 18</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step done">
+                        <div class="roadmap-dot">3</div>
+                        <div class="mini-check">✓</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Hashing</h3>
+                                <p class="topics">HashMap, HashSet, Frequency,<br>Counting, Prefix Sum</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status completed">Completed</span>
+                                <p class="progress-text">100%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong>15 / 15</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step done">
+                        <div class="roadmap-dot">4</div>
+                        <div class="mini-check">✓</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Sorting</h3>
+                                <p class="topics">Bubble, Selection, Insertion,<br>Merge, Quick, Heap</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status completed">Completed</span>
+                                <p class="progress-text">100%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong>20 / 20</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step active">
+                        <div class="roadmap-dot">5</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Arrays</h3>
+                                <p class="topics">1D, 2D Arrays, Prefix Sum,<br>Two Pointer, Sliding Window</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status progress">In Progress</span>
+                                <p class="progress-text">65%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill progress-fill-orange" style="width:65%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong class="orange-text">13 / 20</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step locked-step">
+                        <div class="roadmap-dot">6</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Linked List</h3>
+                                <p class="topics">Singly, Doubly, Cycle, Reversal,<br>Merge, Fast & Slow Pointer</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status locked">Locked</span>
+                                <p class="progress-text">0%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong class="purple-text">0 / 20</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step locked-step">
+                        <div class="roadmap-dot">7</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Stack & Queue</h3>
+                                <p class="topics">Stack, Queue, Deque,<br>Monotonic Stack, Infix/Prefix</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status locked">Locked</span>
+                                <p class="progress-text">0%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong class="purple-text">0 / 20</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step locked-step">
+                        <div class="roadmap-dot">🔒</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Trees</h3>
+                                <p class="topics">Binary Tree, BST, Traversals,<br>Level Order, LCA, Diameter</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status locked">Locked</span>
+                                <p class="progress-text">0%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong class="purple-text">0 / 20</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step locked-step">
+                        <div class="roadmap-dot">🔒</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Graphs</h3>
+                                <p class="topics">BFS, DFS, Topological Sort,<br>Dijkstra, Union Find</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status locked">Locked</span>
+                                <p class="progress-text">0%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong class="purple-text">0 / 20</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step locked-step">
+                        <div class="roadmap-dot">🔒</div>
+
+                        <div class="roadmap-card">
+                            <div class="roadmap-left">
+                                <h3>Dynamic Programming</h3>
+                                <p class="topics">Memoization, Tabulation,<br>DP on Arrays, Strings, Grid</p>
+                            </div>
+
+                            <div class="roadmap-middle">
+                                <span class="status locked">Locked</span>
+                                <p class="progress-text">0%</p>
+                                <div class="roadmap-progress">
+                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-right">
+                                <span>Problems Solved</span>
+                                <strong class="purple-text">0 / 20</strong>
+                            </div>
+
+                            <button class="roadmap-file-btn">📋</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="roadmap-footer">
+                    <p>⭐ <strong>Goal:</strong> Master all topics. Solve 100+ quality problems.</p>
+                    <h3>You've got this! 💪</h3>
+                </div>
+
             </section>
 
-            <script src="script.js"></script>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
