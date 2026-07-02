@@ -2,768 +2,311 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="DSA Mission Control dashboard for tracking DSA practice, streaks, reflections, roadmap progress, and analytics." />
     <title>DSA Mission Control</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="app">
+    <header>
+        <h1>DSA Mission Control</h1>
 
-        <aside class="sidebar">
-            <div class="logo">DSA</div>
+        <nav aria-label="Main navigation">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#add-progress">Add Progress</a>
+            <a href="#problems">Problems</a>
+            <a href="#reflection">Reflection</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#analytics">Analytics</a>
+        </nav>
 
-            <nav>
-                <a href="#dashboard" title="Dashboard">⌂</a>
-                <a href="#add-progress" title="Add Progress">+</a>
-                <a href="#problems" title="Problems">◉</a>
-                <a href="#reflection" title="Daily Reflection">✎</a>
-                <a href="#roadmap" title="Roadmap">◈</a>
-            </nav>
-        </aside>
+        <button type="button" id="themeToggle" aria-pressed="false">Toggle theme</button>
+    </header>
 
-        <main class="main-content">
+    <main>
+        <section id="dashboard">
+            <p>45 day preparation sprint</p>
+            <h2>Welcome, <span id="studentName">Student</span></h2>
+            <p>Track problems, streaks, daily targets, reflections, and DSA roadmap progress.</p>
 
-            <section id="dashboard" class="hero">
-                <h1>DSA Mission Control</h1>
-                <p>Track your 45-days DSA journey like a serious mission.</p>
-            </section>
+            <ul>
+                <li>Problems solved: <strong><span id="count">0</span> / <span id="targetCount">100</span></strong></li>
+                <li>Current streak: <strong id="streakText">0 days</strong></li>
+                <li>Current topic: <strong id="currentTopicSmall">Arrays</strong></li>
+                <li>Total entries: <strong id="totalCount">0</strong></li>
+            </ul>
 
-            <section class="stats-grid dashboard-stats">
-                <div class="target-box">
-                    🎯 Complete 100 Problems Before July 25
+            <progress id="overallProgress" value="0" max="100">0%</progress>
+            <p id="progressText">0% completed</p>
+        </section>
+
+        <section id="add-progress">
+            <h2>Add Progress</h2>
+
+            <form id="problemForm">
+                <label for="problemDay">Day</label>
+                <select id="problemDay" name="problemDay"></select>
+
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="LeetCode">LeetCode problem</option>
+                    <option value="A2Z">Mission DSA tracker</option>
+                </select>
+
+                <label for="problemName">Problem name</label>
+                <input id="problemName" name="problemName" type="text" placeholder="Example: Two Sum" required />
+
+                <label for="topic">Topic</label>
+                <input id="topic" name="topic" type="text" placeholder="Example: Arrays" />
+
+                <button type="submit">Add problem</button>
+                <button type="button" id="clearFormBtn">Clear form</button>
+            </form>
+
+            <p id="formMessage" role="status"></p>
+        </section>
+
+        <section id="problems">
+            <h2>Solved Problems</h2>
+
+            <label for="searchInput">Search</label>
+            <input id="searchInput" type="search" placeholder="Search problem or topic" />
+
+            <label for="categoryFilter">Filter</label>
+            <select id="categoryFilter">
+                <option value="All">All categories</option>
+                <option value="LeetCode">LeetCode</option>
+                <option value="A2Z">Mission tracker</option>
+            </select>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Topic</th>
+                        <th>Category</th>
+                        <th>Day</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="problemList">
+                    <tr>
+                        <td colspan="5">No problems added yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="reflection">
+            <h2>Daily Reflection</h2>
+
+            <label for="reflectionDay">Choose day</label>
+            <select id="reflectionDay"></select>
+
+            <div id="reflectionViewer">
+                <h3>What I learned</h3>
+                <p>Add your key concepts, mistakes, and patterns here.</p>
+
+                <h3>Challenges</h3>
+                <p>Write what confused you or needs revision.</p>
+
+                <h3>Next focus</h3>
+                <p>Plan tomorrow’s topic and problems.</p>
+            </div>
+
+            <label for="reflectionText">Reflection text</label>
+            <textarea id="reflectionText" placeholder="What did you learn? What was hard? What is next?"></textarea>
+
+            <button type="button" id="editReflectionBtn">Edit reflection</button>
+            <button type="button" id="saveReflectionBtn">Save reflection</button>
+            <button type="button" id="cancelReflectionBtn">Cancel</button>
+
+            <p id="savedMsg" role="status"></p>
+        </section>
+
+        <section id="roadmap">
+            <h2>Roadmap Progress</h2>
+
+            <ol>
+                <li><strong>Basic Maths and Logic</strong> - Completed</li>
+                <li><strong>Recursion</strong> - Completed</li>
+                <li><strong>Hashing</strong> - Completed</li>
+                <li><strong>Sorting</strong> - Completed</li>
+                <li><strong>Arrays</strong> - In progress</li>
+                <li><strong>Linked List</strong> - Locked</li>
+            </ol>
+        </section>
+
+        <section id="analytics" class="analytics-section">
+            <div class="analytics-header">
+                <div class="analytics-title">
+                    <div class="analytics-icon">◔</div>
+                    <div>
+                        <h2>Practice Analytics</h2>
+                        <p>Turning data into better decisions.</p>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <h2>📊 Practice Summary</h2>
-                    <table class="summary-table">
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Problems Solved</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>🧠 LeetCode</td>
-                                <td id="leetcodeCount">0</td>
-                            </tr>
-                            <tr>
-                                <td>📘 Mission DSA Tracker</td>
-                                <td id="a2zCount">0</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total</strong></td>
-                                <td><strong id="totalCount">0</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="analytics-filter">
+                    <span id="weekRange">This Week</span>
+                    <span>⌄</span>
+                    <span>▣</span>
                 </div>
+            </div>
 
-                <div class="stat-card">
-                    <h3>✅ Problems Solved</h3>
-                    <p><span id="count">0</span> / 100</p>
-                </div>
+            <div class="analytics-grid">
+                <article class="analytics-card">
+                    <h3>Problems Solved</h3>
 
-                <div class="stat-card">
-                    <h3>🔥 Streak</h3>
-                    <p id="streakText">0 Days</p>
-                </div>
-
-                <div class="stat-card">
-                    <h3>📌 Current Topic</h3>
-                    <p id="currentTopicSmall">Arrays</p>
-                </div>
-            </section>
-
-            <section class="card">
-                <h2>💪 Motivation Quote</h2>
-                <p id="quote">Loading quote...</p>
-            </section>
-
-            <section class="card">
-                <h2>📊 Overall Progress</h2>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <p id="progressText">0% Completed</p>
-            </section>
-
-            <section id="target-dashboard" class="page-section">
-
-                <section class="card target-card">
-                    <div class="section-header">
-                        <div class="section-title">
-                            <div class="section-icon">🎯</div>
-                            <div>
-                                <h2>Today's Target - <span id="targetDayTitle">Day 1</span></h2>
-                                <p>Stay focused. Complete your daily goals.</p>
+                    <div class="donut-layout">
+                        <div class="main-donut" id="problemDonut">
+                            <div class="donut-center">
+                                <strong id="analyticsTotal">0</strong>
+                                <span>Total</span>
                             </div>
                         </div>
 
-                        <div class="day-badge">
-                            🗓️ <span id="dayBadgeText">Day 1</span>
+                        <div class="analytics-legend">
+                            <p><span class="legend-dot blue"></span>LeetCode <strong id="leetcodeAnalytics">0
+                                    (0%)</strong></p>
+                            <p><span class="legend-dot pink"></span>Mission Tracker <strong id="missionAnalytics">0
+                                    (0%)</strong></p>
                         </div>
                     </div>
+                </article>
 
-                    <div id="targetList" class="target-list"></div>
+                <article class="analytics-card">
+                    <h3>Daily Problems Solved</h3>
 
-                    <div class="target-progress-info">
-                        <span id="targetCompletedText">0 / 4 Completed</span>
-                        <span id="targetPercentText">0%</span>
-                    </div>
-
-                    <div class="target-progress-bar">
-                        <div id="targetProgressFill"></div>
-                    </div>
-                </section>
-
-                <section class="stats-grid mission-grid">
-
-                    <div class="card streak-card">
-                        <div class="section-header">
-                            <div class="section-title">
-                                <div class="section-icon fire-icon">🔥</div>
-                                <div>
-                                    <h2>Current Streak</h2>
-                                    <p>Keep it going!</p>
-                                </div>
-                            </div>
+                    <div class="line-chart-card">
+                        <div class="line-y-labels">
+                            <span>50</span>
+                            <span>40</span>
+                            <span>30</span>
+                            <span>20</span>
+                            <span>10</span>
+                            <span>0</span>
                         </div>
 
-                        <div class="streak-content">
-                            <div class="streak-circle">
-                                <h3 id="streakDays">0</h3>
-                                <p>Days</p>
-                            </div>
+                        <div class="line-chart-area">
+                            <svg viewBox="0 0 300 170" preserveAspectRatio="none" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="lineStroke" x1="0" x2="1" y1="0" y2="0">
+                                        <stop offset="0%" stop-color="#0ea5e9" />
+                                        <stop offset="100%" stop-color="#8b5cf6" />
+                                    </linearGradient>
 
-                            <div class="week-dots">
-                                <div class="week-labels">
-                                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
-                                </div>
+                                    <linearGradient id="lineArea" x1="0" x2="0" y1="0" y2="1">
+                                        <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.55" />
+                                        <stop offset="100%" stop-color="#0b1024" stop-opacity="0" />
+                                    </linearGradient>
+                                </defs>
 
-                                <div class="dots-grid">
-                                    <span>✓</span><span>✓</span><span>✓</span><span>✓</span><span>✓</span><span>✓</span><span>✓</span>
-                                    <span>✓</span><span>✓</span><span>✓</span><span>✓</span><span></span><span></span><span></span>
-                                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                                </div>
-                            </div>
-                        </div>
+                                <path id="analyticsAreaPath" class="area-path" d=""></path>
+                                <path id="analyticsLinePath" class="line-path" d=""></path>
+                                <circle id="analyticsLineDot" cx="0" cy="170" r="5"></circle>
+                            </svg>
 
-                        <p class="best-streak">🏆 Best Streak: <span id="bestStreakText">0 Days</span></p>
-                    </div>
+                            <div class="chart-value-badge" id="dailyTotalBadge">0</div>
 
-                    <div class="card topic-card">
-                        <div class="section-header">
-                            <div class="section-title">
-                                <div class="section-icon book-icon">📖</div>
-                                <div>
-                                    <h2>Current Topic</h2>
-                                    <p>Focus Area</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="topic-box">
-                            <h3 id="currentTopic">Arrays</h3>
-                        </div>
-
-                        <div class="topic-note">
-                            <span>🎯</span>
-                            <p>Master the fundamentals.<br>Build the future.</p>
-                        </div>
-                    </div>
-
-                </section>
-
-                <section id="reflection" class="card reflection-card page-section">
-                    <div class="section-header">
-                        <div class="section-title">
-                            <div class="section-icon reflection-icon">🖊️</div>
-                            <div>
-                                <h2>Daily Reflection - <span id="reflectionDayTitle">Day 1</span></h2>
-                                <p>Review your day. Learn and level up.</p>
-                            </div>
-                        </div>
-
-                        <button onclick="editReflection()" class="edit-btn">✏️ Edit Reflection</button>
-                    </div>
-
-                    <select id="reflectionDay"></select>
-
-                    <div id="reflectionViewer" class="reflection-grid"></div>
-
-                    <textarea id="reflectionText" placeholder="Write your reflection..."
-                        style="display: none;"></textarea>
-
-                    <button onclick="saveReflection()" id="saveBtn" style="display: none;">
-                        💾 Save Reflection
-                    </button>
-
-                    <p id="savedMsg"></p>
-                </section>
-
-                <section id="add-progress" class="card add-progress-card page-section">
-                    <div class="section-header">
-                        <div class="section-title">
-                            <div class="section-icon add-icon">➕</div>
-                            <div>
-                                <h2>Add Progress</h2>
-                                <p>Track new problems you solve.</p>
+                            <div class="line-x-labels">
+                                <span>Day 1</span>
+                                <span>Day 3</span>
+                                <span>Day 5</span>
+                                <span>Day 7</span>
                             </div>
                         </div>
                     </div>
+                </article>
 
-                    <div class="add-progress-form">
-                        <select id="problemDay"></select>
+                <article class="analytics-card">
+                    <h3>Category Distribution</h3>
 
-                        <select id="category">
-                            <option value="LeetCode">LeetCode Problem</option>
-                            <option value="A2Z">Mission DSA Topic</option>
-                        </select>
+                    <div class="donut-layout">
+                        <div class="category-donut" id="categoryDonut">
+                            <div class="small-donut-hole"></div>
+                        </div>
 
-                        <input type="text" id="problemName" placeholder="Enter problem name">
-                        <input type="text" id="topic" placeholder="Topic / Note">
-
-                        <button onclick="addProblem()">Add</button>
+                        <div class="analytics-legend" id="categoryLegend">
+                            <p>No topic data yet.</p>
+                        </div>
                     </div>
-                </section>
+                </article>
 
-            </section>
+                <article class="analytics-card">
+                    <h3>Difficulty Breakdown</h3>
 
-            <section id="problems" class="lists-grid page-section">
-                <div class="card">
-                    <h2>🧠 LeetCode Problems</h2>
-                    <table class="problem-table">
-                        <thead>
-                            <tr>
-                                <th>Problem</th>
-                                <th>Topic</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leetcodeList"></tbody>
-                    </table>
-                </div>
+                    <div class="difficulty-row">
+                        <span>Easy</span>
+                        <div class="difficulty-track">
+                            <div class="difficulty-fill easy"></div>
+                        </div>
+                        <strong>50%</strong>
+                    </div>
 
-                <div class="card">
-                    <h2>📘 Mission DSA Tracker</h2>
-                    <table class="problem-table">
-                        <thead>
-                            <tr>
-                                <th>Problem</th>
-                                <th>Topic</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="a2zList"></tbody>
-                    </table>
-                </div>
-            </section>
+                    <div class="difficulty-row">
+                        <span>Medium</span>
+                        <div class="difficulty-track">
+                            <div class="difficulty-fill medium"></div>
+                        </div>
+                        <strong>35%</strong>
+                    </div>
 
-            <section id="roadmap" class="card page-section roadmap-dark-section">
+                    <div class="difficulty-row">
+                        <span>Hard</span>
+                        <div class="difficulty-track">
+                            <div class="difficulty-fill hard"></div>
+                        </div>
+                        <strong>15%</strong>
+                    </div>
+                </article>
 
-                <div class="roadmap-header">
-
-                    <div class="roadmap-title-area">
-                        <div class="roadmap-main-logo">🗺️</div>
-
+                <article class="analytics-card streak-calendar-card">
+                    <div class="calendar-header">
+                        <h3>Streak Calendar</h3>
                         <div>
-                            <h2>Roadmap Progress</h2>
-                            <p>Track your DSA learning journey step by step.</p>
+                            <strong>🔥 <span id="calendarStreak">0</span> Days</strong>
+                            <p>Current Streak</p>
                         </div>
                     </div>
 
-                    <div class="current-focus-box">
-                        <div class="focus-target-icon">🎯</div>
-                        <div>
-                            <span>Current Focus</span>
-                            <strong>Arrays</strong>
-                        </div>
+                    <div class="calendar-months">
+                        <span>May</span>
+                        <span>June</span>
                     </div>
 
+                    <div class="streak-calendar">
+                        <div class="day-labels">
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                            <span>Sun</span>
+                        </div>
+
+                        <div class="calendar-grid" id="calendarGrid"></div>
+                    </div>
+
+                    <div class="calendar-legend">
+                        <span><i></i>No Activity</span>
+                        <span><i class="level-1"></i>1-2 Problems</span>
+                        <span><i class="level-3"></i>3-4 Problems</span>
+                        <span><i class="level-4"></i>5+ Problems</span>
+                    </div>
+                </article>
+
+                <div class="analytics-tip">
+                    <strong>💡 Tip:</strong> Solve a little <span>every day</span>, improve a <span>lot</span> over
+                    time.
                 </div>
-
-                <div class="roadmap-timeline">
-
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">1</div>
-                        <div class="mini-check">✓</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Basic Maths & Logic</h3>
-                                <p class="topics">Number System, GCD, LCM,<br>Prime, Divisors, Modulo</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status completed">Completed</span>
-                                <p class="progress-text">100%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong>12 / 12</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">2</div>
-                        <div class="mini-check">✓</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Recursion</h3>
-                                <p class="topics">Basic Recursion, Memoization,<br>Backtracking Intro</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status completed">Completed</span>
-                                <p class="progress-text">100%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong>18 / 18</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">3</div>
-                        <div class="mini-check">✓</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Hashing</h3>
-                                <p class="topics">HashMap, HashSet, Frequency,<br>Counting, Prefix Sum</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status completed">Completed</span>
-                                <p class="progress-text">100%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong>15 / 15</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step done">
-                        <div class="roadmap-dot">4</div>
-                        <div class="mini-check">✓</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Sorting</h3>
-                                <p class="topics">Bubble, Selection, Insertion,<br>Merge, Quick, Heap</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status completed">Completed</span>
-                                <p class="progress-text">100%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill completed-fill" style="width:100%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong>20 / 20</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step active">
-                        <div class="roadmap-dot">5</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Arrays</h3>
-                                <p class="topics">1D, 2D Arrays, Prefix Sum,<br>Two Pointer, Sliding Window</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status progress">In Progress</span>
-                                <p class="progress-text">65%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill progress-fill-orange" style="width:65%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong class="orange-text">13 / 20</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">6</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Linked List</h3>
-                                <p class="topics">Singly, Doubly, Cycle, Reversal,<br>Merge, Fast & Slow Pointer</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status locked">Locked</span>
-                                <p class="progress-text">0%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong class="purple-text">0 / 20</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">7</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Stack & Queue</h3>
-                                <p class="topics">Stack, Queue, Deque,<br>Monotonic Stack, Infix/Prefix</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status locked">Locked</span>
-                                <p class="progress-text">0%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong class="purple-text">0 / 20</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">🔒</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Trees</h3>
-                                <p class="topics">Binary Tree, BST, Traversals,<br>Level Order, LCA, Diameter</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status locked">Locked</span>
-                                <p class="progress-text">0%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong class="purple-text">0 / 20</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">🔒</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Graphs</h3>
-                                <p class="topics">BFS, DFS, Topological Sort,<br>Dijkstra, Union Find</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status locked">Locked</span>
-                                <p class="progress-text">0%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong class="purple-text">0 / 20</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-step locked-step">
-                        <div class="roadmap-dot">🔒</div>
-
-                        <div class="roadmap-card">
-                            <div class="roadmap-left">
-                                <h3>Dynamic Programming</h3>
-                                <p class="topics">Memoization, Tabulation,<br>DP on Arrays, Strings, Grid</p>
-                            </div>
-
-                            <div class="roadmap-middle">
-                                <span class="status locked">Locked</span>
-                                <p class="progress-text">0%</p>
-                                <div class="roadmap-progress">
-                                    <div class="roadmap-progress-fill locked-fill" style="width:0%"></div>
-                                </div>
-                            </div>
-
-                            <div class="roadmap-right">
-                                <span>Problems Solved</span>
-                                <strong class="purple-text">0 / 20</strong>
-                            </div>
-
-                            <button class="roadmap-file-btn">📋</button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="roadmap-footer">
-                    <p>⭐ <strong>Goal:</strong> Master all topics. Solve 100+ quality problems.</p>
-                    <h3>You've got this! 💪</h3>
-                </div>
-
-            </section>
-            <section id="analytics" class="card analytics-card page-section">
-
-                <div class="analytics-header">
-                    <div class="analytics-title-area">
-                        <div class="analytics-main-icon">◔</div>
-
-                        <div>
-                            <h2>Practice Analytics</h2>
-                            <p>Turning data into better decisions.</p>
-                        </div>
-                    </div>
-
-                    <div class="analytics-filter">
-                        <span>This Week</span>
-                        <span>⌄</span>
-                        <span>📅</span>
-                    </div>
-                </div>
-
-                <div class="analytics-grid">
-
-                    <div class="analytics-box problems-solved-box">
-                        <h3>Problems Solved</h3>
-
-                        <div class="donut-row">
-                            <div class="donut-chart">
-                                <div class="donut-center">
-                                    <strong id="analyticsTotal">44</strong>
-                                    <span>Total</span>
-                                </div>
-                            </div>
-
-                            <div class="chart-legend">
-                                <p><span class="dot blue"></span> LeetCode <strong id="leetcodeAnalytics">18
-                                        (41%)</strong></p>
-                                <p><span class="dot pink"></span> Mission Tracker <strong id="missionAnalytics">26
-                                        (59%)</strong></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analytics-box daily-chart-box">
-                        <h3>Daily Problems Solved</h3>
-
-                        <div class="line-chart">
-                            <div class="y-labels">
-                                <span>50</span>
-                                <span>40</span>
-                                <span>30</span>
-                                <span>20</span>
-                                <span>10</span>
-                                <span>0</span>
-                            </div>
-
-                            <div class="chart-area">
-                                <div class="chart-grid-lines"></div>
-
-                                <svg viewBox="0 0 300 170" preserveAspectRatio="none">
-                                    <defs>
-                                        <linearGradient id="lineGradient" x1="0" x2="1" y1="0" y2="0">
-                                            <stop offset="0%" stop-color="#0ea5e9" />
-                                            <stop offset="100%" stop-color="#8b5cf6" />
-                                        </linearGradient>
-
-                                        <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
-                                            <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.55" />
-                                            <stop offset="100%" stop-color="#0f172a" stop-opacity="0" />
-                                        </linearGradient>
-                                    </defs>
-
-                                    <path class="area-path"
-                                        d="M0 165 L25 145 L50 135 L75 110 L100 95 L125 70 L150 70 L175 48 L200 34 L225 25 L250 18 L280 4 L300 0 L300 170 L0 170 Z" />
-
-                                    <path class="line-path"
-                                        d="M0 165 L25 145 L50 135 L75 110 L100 95 L125 70 L150 70 L175 48 L200 34 L225 25 L250 18 L280 4 L300 0" />
-
-                                    <circle cx="280" cy="4" r="5"></circle>
-                                </svg>
-
-                                <div class="chart-value-badge">44</div>
-
-                                <div class="x-labels">
-                                    <span>Day 1</span>
-                                    <span>Day 3</span>
-                                    <span>Day 5</span>
-                                    <span>Day 7</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analytics-box category-box">
-                        <h3>Category Distribution</h3>
-
-                        <div class="small-donut-row">
-                            <div class="category-donut">
-                                <div class="small-donut-hole"></div>
-                            </div>
-
-                            <div class="category-legend">
-                                <p><span class="dot blue"></span> Arrays <strong>35%</strong></p>
-                                <p><span class="dot purple"></span> Sorting <strong>25%</strong></p>
-                                <p><span class="dot cyan"></span> Recursion <strong>20%</strong></p>
-                                <p><span class="dot orange"></span> Others <strong>20%</strong></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analytics-box difficulty-box">
-                        <h3>Difficulty Breakdown</h3>
-
-                        <div class="difficulty-row">
-                            <span>Easy</span>
-                            <div class="difficulty-track">
-                                <div class="difficulty-fill easy"></div>
-                            </div>
-                            <strong>50%</strong>
-                        </div>
-
-                        <div class="difficulty-row">
-                            <span>Medium</span>
-                            <div class="difficulty-track">
-                                <div class="difficulty-fill medium"></div>
-                            </div>
-                            <strong>35%</strong>
-                        </div>
-
-                        <div class="difficulty-row">
-                            <span>Hard</span>
-                            <div class="difficulty-track">
-                                <div class="difficulty-fill hard"></div>
-                            </div>
-                            <strong>15%</strong>
-                        </div>
-                    </div>
-
-                    <div class="analytics-box streak-calendar-box">
-                        <div class="calendar-header">
-                            <h3>Streak Calendar</h3>
-
-                            <div class="calendar-streak">
-                                <strong>🔥 11 Days</strong>
-                                <span>Current Streak</span>
-                            </div>
-                        </div>
-
-                        <div class="calendar-months">
-                            <span>May</span>
-                            <span>June</span>
-                        </div>
-
-                        <div class="streak-calendar">
-                            <div class="day-labels">
-                                <span>Mon</span>
-                                <span>Tue</span>
-                                <span>Wed</span>
-                                <span>Thu</span>
-                                <span>Fri</span>
-                                <span>Sat</span>
-                                <span>Sun</span>
-                            </div>
-
-                            <div class="calendar-grid">
-                                <span></span><span></span><span></span><span class="level-1"></span><span
-                                    class="level-1"></span><span class="level-2"></span><span class="level-2"></span>
-                                <span></span><span></span><span class="level-1"></span><span
-                                    class="level-2"></span><span class="level-3"></span><span
-                                    class="level-3"></span><span class="level-2"></span>
-                                <span></span><span></span><span></span><span class="level-1"></span><span
-                                    class="level-2"></span><span class="level-3"></span><span class="level-2"></span>
-                                <span></span><span></span><span class="level-1"></span><span
-                                    class="level-1"></span><span class="level-2"></span><span
-                                    class="level-4"></span><span class="level-3"></span>
-                                <span class="level-1"></span><span class="level-1"></span><span
-                                    class="level-2"></span><span class="level-3"></span><span
-                                    class="level-4"></span><span class="level-4"></span><span class="level-3"></span>
-                                <span></span><span></span><span></span><span class="level-2"></span><span
-                                    class="level-3"></span><span class="level-2"></span><span class="level-1"></span>
-                                <span></span><span></span><span></span><span></span><span class="level-1"></span><span
-                                    class="level-1"></span><span></span>
-                            </div>
-                        </div>
-
-                        <div class="calendar-legend">
-                            <span><i></i> No Activity</span>
-                            <span><i class="level-1"></i> 1-2 Problems</span>
-                            <span><i class="level-3"></i> 3-4 Problems</span>
-                            <span><i class="level-4"></i> 5+ Problems</span>
-                        </div>
-                    </div>
-
-                    <div class="analytics-tip">
-                        💡 <strong>Tip:</strong> Solve a little <span>every day</span>, improve a <span>lot</span> over
-                        time.
-                    </div>
-
-                </div>
-
-            </section>
-
-        </main>
-    </div>
-
+            </div>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 
