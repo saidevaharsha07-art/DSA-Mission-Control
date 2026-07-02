@@ -140,10 +140,26 @@
             </ol>
         </section>
 
+        <section id="platform-overview" class="platform-section">
+            <div class="platform-header">
+                <h2>Platform Based Overview</h2>
+
+                <div class="platform-controls">
+                    <span class="platform-sync">Last synced: 7 hr ago</span>
+                    <button type="button" id="platformRefreshBtn" aria-label="Refresh platform stats">↻</button>
+                    <button type="button" id="platformScrollLeft" aria-label="Scroll platform cards left">&lt;</button>
+                    <button type="button" id="platformScrollRight"
+                        aria-label="Scroll platform cards right">&gt;</button>
+                </div>
+            </div>
+
+            <div class="platform-grid" id="platformGrid"></div>
+        </section>
+
         <section id="analytics" class="analytics-section">
             <div class="analytics-header">
                 <div class="analytics-title">
-                    <div class="analytics-icon">◔</div>
+                    <div class="analytics-icon" aria-hidden="true">PA</div>
                     <div>
                         <h2>Practice Analytics</h2>
                         <p>Turning data into better decisions.</p>
@@ -152,8 +168,8 @@
 
                 <div class="analytics-filter">
                     <span id="weekRange">This Week</span>
-                    <span>⌄</span>
-                    <span>▣</span>
+                    <span aria-hidden="true">v</span>
+                    <span aria-hidden="true">[]</span>
                 </div>
             </div>
 
@@ -266,30 +282,46 @@
 
                 <article class="analytics-card streak-calendar-card">
                     <div class="calendar-header">
-                        <h3>Streak Calendar</h3>
                         <div>
-                            <strong>🔥 <span id="calendarStreak">0</span> Days</strong>
-                            <p>Current Streak</p>
+                            <h3>Streak Calendar</h3>
+                        </div>
+                        <div class="calendar-top-actions">
+                            <div class="calendar-controls" aria-label="Calendar controls">
+                                <label for="calendarYear">Year</label>
+                                <select id="calendarYear" aria-label="Choose calendar year">
+                                    <option value="2026">2026</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                            <div class="calendar-streak">
+                                <strong><span id="calendarStreak">0</span> Days</strong>
+                                <p>Current Streak</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="calendar-months">
-                        <span>May</span>
-                        <span>June</span>
-                    </div>
+                    <p class="calendar-summary" id="calendarSummary">0 submissions in 2026</p>
+                    <p class="calendar-day-info" id="calendarDayInfo">Click a day to see solved problems.</p>
+                    <div class="calendar-navigator">
+                        <button type="button" class="calendar-scroll-btn" id="calendarScrollLeft"
+                            aria-label="Scroll calendar left">&lt;</button>
 
-                    <div class="streak-calendar">
-                        <div class="day-labels">
-                            <span>Mon</span>
-                            <span>Tue</span>
-                            <span>Wed</span>
-                            <span>Thu</span>
-                            <span>Fri</span>
-                            <span>Sat</span>
-                            <span>Sun</span>
+                        <div class="streak-calendar" id="calendarViewport">
+                            <div class="day-labels">
+                                <span>Mon</span>
+                                <span>Tue</span>
+                                <span>Wed</span>
+                                <span>Thu</span>
+                                <span>Fri</span>
+                                <span>Sat</span>
+                                <span>Sun</span>
+                            </div>
+
+                            <div class="calendar-grid" id="calendarGrid"></div>
                         </div>
 
-                        <div class="calendar-grid" id="calendarGrid"></div>
+                        <button type="button" class="calendar-scroll-btn" id="calendarScrollRight"
+                            aria-label="Scroll calendar right">&gt;</button>
                     </div>
 
                     <div class="calendar-legend">
@@ -301,7 +333,7 @@
                 </article>
 
                 <div class="analytics-tip">
-                    <strong>💡 Tip:</strong> Solve a little <span>every day</span>, improve a <span>lot</span> over
+                    <strong>Tip:</strong> Solve a little <span>every day</span>, improve a <span>lot</span> over
                     time.
                 </div>
             </div>
